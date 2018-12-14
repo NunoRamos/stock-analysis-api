@@ -43,7 +43,8 @@ exports.getDailyCompaniesStats = (req, res, next) => {
     results.forEach(quote => {
       companiesStats.push(quote);
     });
-    return res.status(200).json(companiesStats);
+    req.companiesStats = companiesStats;
+    return next();
   });
 };
 
@@ -52,6 +53,8 @@ exports.getDailyCompanyStats = symbol => new Promise(resolve => {
       .then(htmlString => {
         let json = JSON.parse(htmlString);
         const stats = json["Time Series (Daily)"];
+
+
         return resolve({ symbol, stats: stats });
       })
       .catch(err => {
@@ -61,5 +64,24 @@ exports.getDailyCompanyStats = symbol => new Promise(resolve => {
 });
 
 exports.calculatePriceVariation = (req, res) => {
-  
+  const companiesStats = req.companiesStats;
+  console.log('ESTOU AQUI');
+
+  for(companieStats of companiesStats){
+    const stats = companieStats.stats;
+    const days = Object.keys(stats);
+    const numberOfdays = days.length;
+    const priceVariations = [];
+
+    console.log('Vou calcular preços');
+    for(var i = numberOfdays - 1; i >= 0; i = i -2){
+      const dayOne = days[i], dayTwo = days[i - 1];
+      const dayOneStats = stats[dayOne], dayOneClose = Number(dayOneStats['4. close']);
+      const dayTwoStats = stats[dayTwo], dayTwoClose = Number(dayTwoStats['4. close']);
+      const priceVariation = (dayTwoClose - dayOneClose) / dayTwoClose;
+      priceVariations.push(priceVariation);
+    }
+    companieStats.closePriceVariations = priceVariations;;
+  }
+  return res.status(200).json(companiesStats);
 }
