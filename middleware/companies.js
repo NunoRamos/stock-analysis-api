@@ -165,7 +165,10 @@ exports.getDailyCompaniesStats = (req, res, next) => {
   const promiseCalls = [];
 
   for (index in companiesArray)
-      promiseCalls.push(this.getDailyCompanyStats(companiesArray[index]));
+    if(index > 0)
+      promiseCalls.push(this.getDailyCompanyStats(companiesArray[index], true));
+    else
+      promiseCalls.push(this.getDailyCompanyStats(companiesArray[index], false));
 
   return Promise.all(promiseCalls).then(results => {
     let companiesStats = [];
@@ -178,13 +181,16 @@ exports.getDailyCompaniesStats = (req, res, next) => {
 };
 // W0EMXNK77PYK3OPY
 // WBYIY219EMNOZB92
-exports.getDailyCompanyStats = symbol => new Promise(resolve => {
+exports.getDailyCompanyStats = (symbol, dummie) => new Promise(resolve => {
   requestPromise('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=W0EMXNK77PYK3OPY')
       .then(htmlString => {
         let json = JSON.parse(htmlString);
         console.log({json});
         if(json['Note'] != null)
-          return resolve(data.companyHistory)
+          if(dummie)
+            return resolve(data.companyHistoryTwo);
+          else
+            return resolve(data.companyHistoryOne);
         const stats = json["Time Series (Daily)"];
         console.log({ stats });
 
