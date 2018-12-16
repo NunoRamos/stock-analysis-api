@@ -1,4 +1,5 @@
 const requestPromise = require('request-promise');
+const data = require('../data/companyhistory');
 
 exports.getCompaniesQuotes = (req, res, next) => {
     let companies = req.params.companiesList;
@@ -160,6 +161,7 @@ exports.getDailyCompaniesStats = (req, res, next) => {
   let companies = req.params.companiesList;
   console.log({companies})
   let companiesArray = JSON.parse(companies);
+  console.log({companiesArray});
   const promiseCalls = [];
 
   for (index in companiesArray)
@@ -174,17 +176,23 @@ exports.getDailyCompaniesStats = (req, res, next) => {
     return next();
   });
 };
-
+// W0EMXNK77PYK3OPY
+// WBYIY219EMNOZB92
 exports.getDailyCompanyStats = symbol => new Promise(resolve => {
-  requestPromise('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=WBYIY219EMNOZB92')
+  requestPromise('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=W0EMXNK77PYK3OPY')
       .then(htmlString => {
         let json = JSON.parse(htmlString);
+        console.log({json});
+        if(json['Note'] != null)
+          return resolve(data.companyHistory)
         const stats = json["Time Series (Daily)"];
+        console.log({ stats });
 
 
         return resolve({ symbol, stats: stats });
       })
       .catch(err => {
+        console.log('DEU ERRO');
         console.log(err);
         return resolve({});
       });
@@ -195,7 +203,9 @@ exports.calculatePriceVariation = (req, res) => {
   console.log('ESTOU AQUI');
 
   for(companieStats of companiesStats){
+    console.log('Entrei aqui');
     const stats = companieStats.stats;
+    console.log({ stats });
     const days = Object.keys(stats);
     const numberOfdays = days.length;
     const priceVariations = [];
