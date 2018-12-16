@@ -176,7 +176,7 @@ exports.getDailyCompaniesStats = (req, res, next) => {
 };
 
 exports.getDailyCompanyStats = symbol => new Promise(resolve => {
-  requestPromise('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=0V27RLXB3DH4EYVO')
+  requestPromise('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + symbol + '&apikey=WBYIY219EMNOZB92')
       .then(htmlString => {
         let json = JSON.parse(htmlString);
         const stats = json["Time Series (Daily)"];
