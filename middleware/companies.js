@@ -55,7 +55,7 @@ exports.returnDummyData = companySymbol => {
             companyObj["07. latest trading day"] = 	"2018-12-14";
             companyObj["08. previous close"] = "170.9500";
             companyObj["09. change"] = "-5.4700";
-            companyObj["10. change percent"] = 	"-3.1998%";
+            companyObj["10. change percent"] = 	"3.1998%";
             break;
         case "AMZN":
             companyObj["01. symbol"] = "AMZN";
@@ -79,7 +79,7 @@ exports.returnDummyData = companySymbol => {
             companyObj["07. latest trading day"] = "2018-12-14";
             companyObj["08. previous close"] = "1073.5400";
             companyObj["09. change"] = "-21.8301";
-            companyObj["10. change percent"] = "-2.0335%";
+            companyObj["10. change percent"] = "2.0335%";
             break;
         case "GOOG":
             companyObj["01. symbol"] = "GOOG";
@@ -103,7 +103,7 @@ exports.returnDummyData = companySymbol => {
             companyObj["07. latest trading day"] = "2018-12-14";
             companyObj["08. previous close"] = "145.0100";
             companyObj["09. change"] = "-0.9500";
-            companyObj["10. change percent"] = "-0.6551%";
+            companyObj["10. change percent"] = "0.6551%";
             break;
         case "INTC":
             companyObj["01. symbol"] = "INTC";
@@ -139,7 +139,7 @@ exports.returnDummyData = companySymbol => {
             companyObj["07. latest trading day"] = "2018-12-14";
             companyObj["08. previous close"] = "36.7600";
             companyObj["09. change"] = "-0.4200";
-            companyObj["10. change percent"] = "-1.1425%";
+            companyObj["10. change percent"] = "1.1425%";
             break;
         case "PEP":
             companyObj["01. symbol"] = "PEP";
